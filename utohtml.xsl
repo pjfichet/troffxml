@@ -57,16 +57,16 @@ xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 </xsl:template>
 
 <!-- notes -->
-<xsl:template match="M">
+<xsl:template match="N">
   <span class="U"><a>
-    <xsl:attribute name="name">M<xsl:value-of select="@num"/></xsl:attribute>
+    <xsl:attribute name="name">N<xsl:value-of select="@num"/></xsl:attribute>
     <xsl:attribute name="href">#N<xsl:value-of select="@num"/></xsl:attribute>
     <xsl:value-of select="@num"/>
   </a></span>
 </xsl:template>
-<xsl:template match="MT"></xsl:template>
-<xsl:template match="MN"></xsl:template>
-<xsl:template match="MB"></xsl:template>
+<xsl:template match="NT"></xsl:template>
+<xsl:template match="NS"></xsl:template>
+<xsl:template match="NB"></xsl:template>
 
 <!-- fonts -->
 <xsl:template match="F">
@@ -77,7 +77,7 @@ xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 </xsl:template>
 
 <!-- root -->
-<xsl:template match="H">
+<xsl:template match="HLM">
 <html>
 <head>
   <title><xsl:value-of select="DT"/></title>
@@ -122,46 +122,58 @@ xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 </head>
 
 <body>
-  <div class="content" id="top">
-    <div class="top">
-      <xsl:for-each select="//MT">
-        <p>
-          <a>
-            <xsl:attribute name="href">T<xsl:value-of select="@num"/></xsl:attribute>
-          </a>
-      		<xsl:text>) </xsl:text>
-          <xsl:apply-templates/>
-        </p>
-      </xsl:for-each>
-    </div>
+  <!-- top notes -->
+    <div class="content" id="top">
+    <xsl:if test="//NT">
+      <div class="top">
+        <xsl:for-each select="//NT">
+          <p>
+            <a>
+              <xsl:attribute name="href">T<xsl:value-of select="@num"/></xsl:attribute>
+            </a>
+        		<xsl:text>) </xsl:text>
+            <xsl:apply-templates/>
+          </p>
+        </xsl:for-each>
+      </div>
+    </xsl:if>
 
     <xsl:apply-templates/>
 
-    <div class="notes">
+    <!-- notes -->
+	  <xsl:if test="//NS">
+		  <hr/>
+      <div class="notes">
       <h3>Notes</h3>
-      <xsl:for-each select="//MN">
+      <xsl:for-each select="//NS">
         <p>
           <a>
             <xsl:attribute name="name">N<xsl:value-of select="@num"/></xsl:attribute>
-            <xsl:attribute name="href">#M<xsl:value-of select="@num"/></xsl:attribute>
+            <xsl:attribute name="href">#N<xsl:value-of select="@num"/></xsl:attribute>
             <xsl:value-of select="@num"/>
           </a>
           <xsl:text>) </xsl:text>
           <xsl:apply-templates/>
         </p>
       </xsl:for-each>
-    </div>
-    <div class="bottom">
-      <xsl:for-each select="//MB">
-        <p>
-          <a>
-            <xsl:attribute name="href">B<xsl:value-of select="@num"/></xsl:attribute>
-          </a>
-          <xsl:text>) </xsl:text>
-          <xsl:apply-templates/>
-        </p>
-      </xsl:for-each>
-    </div>
+      </div>
+    </xsl:if>
+
+    <!-- bottom notes -->
+    <xsl:if test="//NB">
+      <div class="bottom">
+        <xsl:for-each select="//NB">
+          <p>
+            <a>
+              <xsl:attribute name="href">B<xsl:value-of select="@num"/></xsl:attribute>
+            </a>
+            <xsl:text>) </xsl:text>
+            <xsl:apply-templates/>
+          </p>
+        </xsl:for-each>
+      </div>
+    </xsl:if>
+
   </div>
 </body>
 </html>

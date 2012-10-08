@@ -104,7 +104,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 </xsl:template>
 
 <!-- notes -->
-<xsl:template match="M">
+<xsl:template match="N">
   <xsl:param name="num"><xsl:value-of select="@num"/></xsl:param>
   <xsl:for-each select="//MN[@num=$num]">
     <text:note>
@@ -121,9 +121,9 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   </xsl:for-each>
 </xsl:template>
 
-<xsl:template match="MT"></xsl:template>
-<xsl:template match="MN"></xsl:template>
-<xsl:template match="MB"></xsl:template>
+<xsl:template match="NT"></xsl:template>
+<xsl:template match="NS"></xsl:template>
+<xsl:template match="NB"></xsl:template>
 
 <!-- fonts -->
 <xsl:template match="F">
@@ -134,7 +134,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 </xsl:template>
 
 <!-- root -->
-<xsl:template match="H">
+<xsl:template match="HLM">
 <office:document
   office:version="1.2"
   office:mimetype="application/vnd.oasis.opendocument.text">
@@ -515,7 +515,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
  </text:sequence-decls>
 
 <!-- content -->
-  <xsl:for-each select="//MT">
+  <xsl:for-each select="//NT">
     <text:p text:style-name="Text_right_align">
     <xsl:apply-templates/>
     </text:p>
@@ -523,7 +523,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 
 <xsl:apply-templates/>
 
-  <xsl:for-each select="//MB">
+  <xsl:for-each select="//NB">
     <text:p text:style-name="Text_right_align">
     <xsl:apply-templates/>
     </text:p>
