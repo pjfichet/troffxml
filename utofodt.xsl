@@ -34,7 +34,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:formx="urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0"
   xmlns:css3t="http://www.w3.org/TR/css3-text/"
 >
-<xsl:output encoding="UTF-8"/>
+<xsl:output encoding="UTF-8" indent="yes"/>
 
 <!-- metadatas -->
 <xsl:template match="DA"></xsl:template>
@@ -104,9 +104,38 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 </xsl:template>
 
 <!-- notes -->
-<xsl:template match="N">
+<xsl:template match="NN">
   <xsl:param name="num"><xsl:value-of select="@num"/></xsl:param>
-  <xsl:for-each select="//MN[@num=$num]">
+  <!-- Note Top -->
+  <xsl:for-each select="//NT[@num=$num]">
+    <text:note>
+      <xsl:attribute name="text:id">ftn<xsl:value-of select="@num"/></xsl:attribute>
+      <xsl:attribute name="text:note-class">footnote</xsl:attribute>
+      <text:note-citation><xsl:value-of select="@num"/></text:note-citation>
+      <text:note-body>
+        <text:p>
+          <xsl:attribute name="text:style-name">Footnote</xsl:attribute>
+          <xsl:apply-templates/>
+        </text:p>
+      </text:note-body>
+    </text:note>
+  </xsl:for-each>
+  <!-- Footnote -->
+  <xsl:for-each select="//NS[@num=$num]">
+    <text:note>
+      <xsl:attribute name="text:id">ftn<xsl:value-of select="@num"/></xsl:attribute>
+      <xsl:attribute name="text:note-class">footnote</xsl:attribute>
+      <text:note-citation><xsl:value-of select="@num"/></text:note-citation>
+      <text:note-body>
+        <text:p>
+          <xsl:attribute name="text:style-name">Footnote</xsl:attribute>
+          <xsl:apply-templates/>
+        </text:p>
+      </text:note-body>
+    </text:note>
+  </xsl:for-each>
+  <!-- End Note -->
+  <xsl:for-each select="//NB[@num=$num]">
     <text:note>
       <xsl:attribute name="text:id">ftn<xsl:value-of select="@num"/></xsl:attribute>
       <xsl:attribute name="text:note-class">footnote</xsl:attribute>
@@ -501,7 +530,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 </office:automatic-styles>
 
 <office:master-styles>
- <style:master-page style:name="Standard" style:page-layout-name="pm1"/>
+ <style:master-page style:name="Text_body" style:page-layout-name="pm1"/>
 </office:master-styles>
 
 <office:body>
