@@ -4,6 +4,8 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
 <!-- <xsl:strip-space elements="*"/> -->
+<xsl:preserve-space elements="PX"/>
+
 
 <!-- metadatas -->
 <xsl:template match="DA"></xsl:template>
@@ -30,7 +32,7 @@ xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 
 <!-- paragraphs -->
 <xsl:template match="PC">
-  <code><xsl:apply-templates/></code>
+  <p class="centered"><xsl:apply-templates/></p>
 </xsl:template>
 <xsl:template match="PL">
   <p class="leftextended"><xsl:apply-templates/></p>
@@ -45,7 +47,7 @@ xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
   <p class="rightalign"><xsl:apply-templates/></p>
 </xsl:template>
 <xsl:template match="PX">
-  <p class="example"><xsl:apply-templates/></p>
+  <pre><xsl:apply-templates/></pre>
 </xsl:template>
 
 <!-- lists -->
@@ -67,6 +69,53 @@ xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <xsl:template match="NT"></xsl:template>
 <xsl:template match="NS"></xsl:template>
 <xsl:template match="NB"></xsl:template>
+
+<!-- inline, index, links -->
+<xsl:template match="XA">
+  <acronym>
+	<xsl:attribute name="title"><xsl:value-of select="@name"/></xsl:attribute>
+	<xsl:apply-templates/>
+  </acronym>
+</xsl:template>
+<xsl:template match="XC"></xsl:template>
+<xsl:template match="XD"></xsl:template>
+<xsl:template match="XE"></xsl:template>
+<xsl:template match="XI"></xsl:template>
+<xsl:template match="XK">
+ <a>
+    <xsl:attribute name="name"><xsl:value-of select="@num"/></xsl:attribute>
+	<xsl:apply-templates/>
+  </a>
+</xsl:template>
+<xsl:template match="XL">
+  <a>
+	<xsl:attribute name="href"><xsl:value-of select="@name"/></xsl:attribute>
+	<xsl:apply-templates/>
+  </a>
+</xsl:template>
+<xsl:template match="XM">
+  <a>
+	<xsl:attribute name="mailto"><xsl:value-of select="@name"/></xsl:attribute>
+	<xsl:apply-templates/>
+  </a>
+</xsl:template>
+<xsl:template match="XN"></xsl:template>
+<xsl:template match="XH"></xsl:template>
+<xsl:template match="XO"></xsl:template>
+<xsl:template match="XS"></xsl:template>
+<xsl:template match="XT"></xsl:template>
+<xsl:template match="XU">
+  <a>
+	<xsl:attribute name="href"><xsl:value-of select="@name"/></xsl:attribute>
+	<xsl:apply-templates/>
+  </a>
+</xsl:template>
+<xsl:template match="XM">
+  <a>
+	<xsl:attribute name="mailto"><xsl:value-of select="@name"/></xsl:attribute>
+	<xsl:apply-templates/>
+  </a>
+</xsl:template>
 
 <!-- fonts -->
 <xsl:template match="F">
@@ -148,7 +197,7 @@ xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
       <xsl:for-each select="//NS">
         <p>
           <a>
-            <xsl:attribute name="name">N<xsl:value-of select="@num"/></xsl:attribute>
+            <xsl:attribute name="name">NN<xsl:value-of select="@num"/></xsl:attribute>
             <xsl:attribute name="href">#N<xsl:value-of select="@num"/></xsl:attribute>
             <xsl:value-of select="@num"/>
           </a>
