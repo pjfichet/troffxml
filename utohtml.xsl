@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- $Id$ -->
+<!-- $Id: utohtml.xsl,v 0.4 2013/03/22 16:43:01 pj Exp pj $ -->
 
 <xsl:stylesheet version="1.0"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -129,7 +129,7 @@ xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 </xsl:template>
 
 <!-- root -->
-<xsl:template match="HLM">
+<xsl:template match="UTMAC">
 <html>
 <head>
   <title><xsl:value-of select="DT"/></title>

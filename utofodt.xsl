@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- $Id$ -->
+<!-- $Id: utofodt.xsl,v 0.4 2013/03/22 16:43:01 pj Exp pj $ -->
 
 <xsl:stylesheet version="1.0"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -166,7 +166,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 </xsl:template>
 
 <!-- root -->
-<xsl:template match="HLM">
+<xsl:template match="UTMAC">
 <office:document
   office:version="1.2"
   office:mimetype="application/vnd.oasis.opendocument.text">
