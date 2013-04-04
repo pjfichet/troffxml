@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- $Id: utofodt.xsl,v 0.4 2013/03/22 16:43:01 pj Exp pj $ -->
+<!-- $Id: utofodt.xsl,v 0.5 2013/03/26 19:35:02 pj Exp pj $ -->
 
 <xsl:stylesheet version="1.0"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -99,7 +99,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 </xsl:template>
 
 <!-- lists -->
-<xsl:template match="LI">
+<xsl:template match="PLIST">
   <text:list text:style-name="List"><xsl:apply-templates/></text:list>
 </xsl:template>
 <xsl:template match="PI">

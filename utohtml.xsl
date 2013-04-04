@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- $Id: utohtml.xsl,v 0.4 2013/03/22 16:43:01 pj Exp pj $ -->
+<!-- $Id: utohtml.xsl,v 0.5 2013/03/26 19:35:02 pj Exp pj $ -->
 
 <xsl:stylesheet version="1.0"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -54,7 +54,7 @@ xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 </xsl:template>
 
 <!-- lists -->
-<xsl:template match="LI">
+<xsl:template match="PLIST">
   <ul><xsl:apply-templates/></ul>
 </xsl:template>
 <xsl:template match="PI">
@@ -74,46 +74,46 @@ xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <xsl:template match="NB"></xsl:template>
 
 <!-- inline, index, links -->
-<xsl:template match="XA">
+<xsl:template match="LA">
   <acronym>
 	<xsl:attribute name="title"><xsl:value-of select="@name"/></xsl:attribute>
 	<xsl:apply-templates/>
   </acronym>
 </xsl:template>
-<xsl:template match="XC"></xsl:template>
-<xsl:template match="XD"></xsl:template>
-<xsl:template match="XE"></xsl:template>
-<xsl:template match="XI"></xsl:template>
-<xsl:template match="XK">
+<xsl:template match="LC"></xsl:template>
+<xsl:template match="LD"></xsl:template>
+<xsl:template match="LE"></xsl:template>
+<xsl:template match="LI"></xsl:template>
+<xsl:template match="LK">
  <a>
     <xsl:attribute name="name"><xsl:value-of select="@num"/></xsl:attribute>
 	<xsl:apply-templates/>
   </a>
 </xsl:template>
-<xsl:template match="XL">
+<xsl:template match="LL">
   <a>
 	<xsl:attribute name="href"><xsl:value-of select="@name"/></xsl:attribute>
 	<xsl:apply-templates/>
   </a>
 </xsl:template>
-<xsl:template match="XM">
+<xsl:template match="LM">
   <a>
 	<xsl:attribute name="mailto"><xsl:value-of select="@name"/></xsl:attribute>
 	<xsl:apply-templates/>
   </a>
 </xsl:template>
-<xsl:template match="XN"></xsl:template>
-<xsl:template match="XH"></xsl:template>
-<xsl:template match="XO"></xsl:template>
-<xsl:template match="XS"></xsl:template>
-<xsl:template match="XT"></xsl:template>
-<xsl:template match="XU">
+<xsl:template match="LN"></xsl:template>
+<xsl:template match="LH"></xsl:template>
+<xsl:template match="LO"></xsl:template>
+<xsl:template match="LS"></xsl:template>
+<xsl:template match="LT"></xsl:template>
+<xsl:template match="LU">
   <a>
 	<xsl:attribute name="href"><xsl:value-of select="@name"/></xsl:attribute>
 	<xsl:apply-templates/>
   </a>
 </xsl:template>
-<xsl:template match="XM">
+<xsl:template match="LM">
   <a>
 	<xsl:attribute name="mailto"><xsl:value-of select="@name"/></xsl:attribute>
 	<xsl:apply-templates/>
@@ -132,7 +132,15 @@ xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <xsl:template match="UTMAC">
 <html>
 <head>
-  <title><xsl:value-of select="DT"/></title>
+  <xsl:choose>
+    <xsl:when test="//DT">
+      <title><xsl:value-of select="DT"/></title>
+    </xsl:when>
+    <xsl:otherwise>
+      <title>Utroff</title>
+    </xsl:otherwise>
+  </xsl:choose>
+
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <xsl:for-each select="DG">
     <meta>
@@ -155,6 +163,12 @@ xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
   <xsl:for-each select="DF">
     <meta>
       <xsl:attribute name="name">filename</xsl:attribute>
+      <xsl:attribute name="content"><xsl:value-of select="."/></xsl:attribute>
+    </meta>
+  </xsl:for-each>
+  <xsl:for-each select="DI">
+    <meta>
+      <xsl:attribute name="name">Id</xsl:attribute>
       <xsl:attribute name="content"><xsl:value-of select="."/></xsl:attribute>
     </meta>
   </xsl:for-each>
