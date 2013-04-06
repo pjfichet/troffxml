@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- $Id: utohtml.xsl,v 0.5 2013/03/26 19:35:02 pj Exp pj $ -->
+<!-- $Id: utohtml.xsl,v 0.6 2013/04/04 09:07:50 pj Exp pj $ -->
 
 <xsl:stylesheet version="1.0"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-<xsl:output method="xml" encoding="UTF-8" indent="yes"/>
+<xsl:output
+	method="html"
+	 encoding="UTF-8"
+	doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN"
+	doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"
+	indent="yes"/>
 <!-- <xsl:strip-space elements="*"/> -->
 <xsl:preserve-space elements="PX"/>
 
