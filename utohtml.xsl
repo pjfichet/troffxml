@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- $Id: utohtml.xsl,v 0.6 2013/04/04 09:07:50 pj Exp pj $ -->
+<!-- $Id: utohtml.xsl,v 0.7 2013/04/06 09:57:01 pj Exp pj $ -->
 
 <xsl:stylesheet version="1.0"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -42,8 +42,11 @@ xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <xsl:template match="PC">
   <p class="centered"><xsl:apply-templates/></p>
 </xsl:template>
-<xsl:template match="PL">
+<xsl:template match="PB">
   <p class="leftextended"><xsl:apply-templates/></p>
+</xsl:template>
+<xsl:template match="PL">
+  <p class="leftalign"><xsl:apply-templates/></p>
 </xsl:template>
 <xsl:template match="PP">
   <p><xsl:apply-templates/></p>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- $Id: utofodt.xsl,v 0.5 2013/03/26 19:35:02 pj Exp pj $ -->
+<!-- $Id: utofodt.xsl,v 0.6 2013/04/04 09:07:50 pj Exp pj $ -->
 
 <xsl:stylesheet version="1.0"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -85,8 +85,11 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 <xsl:template match="PQ">
   <text:p text:style-name="Text_quotation"><xsl:apply-templates/></text:p>
 </xsl:template>
-<xsl:template match="PL">
+<xsl:template match="PB">
   <text:p text:style-name="Text_left_indent"><xsl:apply-templates/></text:p>
+</xsl:template>
+<xsl:template match="PL">
+  <text:p text:style-name="Text_left_align"><xsl:apply-templates/></text:p>
 </xsl:template>
 <xsl:template match="PR">
   <text:p text:style-name="Text_right_align"><xsl:apply-templates/></text:p>
@@ -298,6 +301,20 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   style:parent-style-name="Text_body"
   style:class="text">
  <style:paragraph-properties
+  fo:margin="100%"
+  fo:margin-left="2cm"
+  fo:margin-right="0cm"
+  fo:text-indent="0cm"
+  style:auto-text-indent="false"/>
+ </style:style>
+
+ <style:style style:name="Text_left_align"
+  style:display-name="Text left align"
+  style:family="paragraph"
+  style:parent-style-name="Text_body"
+  style:class="text">
+ <style:paragraph-properties
+  fo:text-align="left"
   fo:margin="100%"
   fo:margin-left="2cm"
   fo:margin-right="0cm"
