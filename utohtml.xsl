@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- $Id: utohtml.xsl,v 0.7 2013/04/06 09:57:01 pj Exp pj $ -->
+<!-- $Id: utohtml.xsl,v 0.8 2013/04/07 17:15:42 pj Exp pj $ -->
 
 <xsl:stylesheet version="1.0"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -129,12 +129,55 @@ xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 </xsl:template>
 
 <!-- fonts -->
-<xsl:template match="F">
+<xsl:template match="B">
   <span>
-    <xsl:attribute name="class"><xsl:value-of select="@name"/></xsl:attribute>
+    <xsl:attribute name="class">B</xsl:attribute>
     <xsl:apply-templates/>
   </span>
 </xsl:template>
+<xsl:template match="I">
+  <span>
+    <xsl:attribute name="class">I</xsl:attribute>
+    <xsl:apply-templates/>
+  </span>
+</xsl:template>
+<xsl:template match="C">
+  <span>
+    <xsl:attribute name="class">C</xsl:attribute>
+    <xsl:apply-templates/>
+  </span>
+</xsl:template>
+<xsl:template match="A">
+  <span>
+    <xsl:attribute name="class">A</xsl:attribute>
+    <xsl:apply-templates/>
+  </span>
+</xsl:template>
+<xsl:template match="U">
+  <span>
+    <xsl:attribute name="class">U</xsl:attribute>
+    <xsl:apply-templates/>
+  </span>
+</xsl:template>
+<xsl:template match="L">
+  <span>
+    <xsl:attribute name="class">L</xsl:attribute>
+    <xsl:apply-templates/>
+  </span>
+</xsl:template>
+<xsl:template match="F">
+  <span>
+    <xsl:attribute name="class">F</xsl:attribute>
+    <xsl:apply-templates/>
+  </span>
+</xsl:template>
+<xsl:template match="M">
+  <span>
+    <xsl:attribute name="class">M</xsl:attribute>
+    <xsl:apply-templates/>
+  </span>
+</xsl:template>
+
 
 <!-- root -->
 <xsl:template match="UTMAC">
