@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- $Id: utofodt.xsl,v 0.6 2013/04/04 09:07:50 pj Exp pj $ -->
+<!-- $Id: utofodt.xsl,v 0.7 2013/04/07 17:15:42 pj Exp pj $ -->
 
 <xsl:stylesheet version="1.0"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -161,12 +161,105 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 <xsl:template match="NB"></xsl:template>
 
 <!-- fonts -->
-<xsl:template match="F">
+<xsl:template match="B">
   <text:span>
-    <xsl:attribute name="text:style-name"><xsl:value-of select="@name"/></xsl:attribute>
-	<xsl:apply-templates/>
+    <xsl:attribute name="text:style-name">
+  <xsl:text>B</xsl:text>
+  <xsl:if test="ancestor::I">I</xsl:if>
+  <xsl:if test="ancestor::C">C</xsl:if>
+  <xsl:if test="ancestor::A">A</xsl:if>
+  <xsl:if test="ancestor::U">U</xsl:if>
+  <xsl:if test="ancestor::L">L</xsl:if>
+  <xsl:if test="ancestor::F">F</xsl:if>
+  <xsl:if test="ancestor::M">M</xsl:if>
+    </xsl:attribute>
+    <xsl:apply-templates/>
   </text:span>
 </xsl:template>
+
+<xsl:template match="I">
+  <text:span>
+    <xsl:attribute name="text:style-name">
+  <xsl:if test="ancestor::B">B</xsl:if>
+  <xsl:text>I</xsl:text>
+  <xsl:if test="ancestor::C">C</xsl:if>
+  <xsl:if test="ancestor::A">A</xsl:if>
+  <xsl:if test="ancestor::U">U</xsl:if>
+  <xsl:if test="ancestor::L">L</xsl:if>
+  <xsl:if test="ancestor::F">F</xsl:if>
+  <xsl:if test="ancestor::M">M</xsl:if>
+    </xsl:attribute>
+    <xsl:apply-templates/>
+  </text:span>
+</xsl:template>
+
+<xsl:template match="C">
+  <text:span>
+    <xsl:attribute name="text:style-name">
+  <xsl:if test="ancestor::B">B</xsl:if>
+  <xsl:if test="ancestor::I">I</xsl:if>
+  <xsl:text>C</xsl:text>
+    </xsl:attribute>
+    <xsl:apply-templates/>
+  </text:span>
+</xsl:template>
+
+<xsl:template match="A">
+  <text:span>
+    <xsl:attribute name="text:style-name">
+  <xsl:if test="ancestor::B">B</xsl:if>
+  <xsl:if test="ancestor::I">I</xsl:if>
+  <xsl:text>A</xsl:text>
+    </xsl:attribute>
+    <xsl:apply-templates/>
+  </text:span>
+</xsl:template>
+
+<xsl:template match="U">
+  <text:span>
+    <xsl:attribute name="text:style-name">
+  <xsl:if test="ancestor::B">B</xsl:if>
+  <xsl:if test="ancestor::I">I</xsl:if>
+  <xsl:text>U</xsl:text>
+    </xsl:attribute>
+    <xsl:apply-templates/>
+  </text:span>
+</xsl:template>
+
+<xsl:template match="L">
+  <text:span>
+    <xsl:attribute name="text:style-name">
+  <xsl:if test="ancestor::B">B</xsl:if>
+  <xsl:if test="ancestor::I">I</xsl:if>
+  <xsl:text>L</xsl:text>
+    </xsl:attribute>
+    <xsl:apply-templates/>
+  </text:span>
+</xsl:template>
+
+<xsl:template match="F">
+  <text:span>
+    <xsl:attribute name="text:style-name">
+  <xsl:if test="ancestor::B">B</xsl:if>
+  <xsl:if test="ancestor::I">I</xsl:if>
+  <xsl:text>F</xsl:text>
+    </xsl:attribute>
+    <xsl:apply-templates/>
+  </text:span>
+</xsl:template>
+
+<xsl:template match="M">
+  <text:span>
+    <xsl:attribute name="text:style-name">
+  <xsl:if test="ancestor::B">B</xsl:if>
+  <xsl:if test="ancestor::I">I</xsl:if>
+  <xsl:text>M</xsl:text>
+    </xsl:attribute>
+    <xsl:apply-templates/>
+  </text:span>
+</xsl:template>
+
+
 
 <!-- root -->
 <xsl:template match="UTMAC">
@@ -186,10 +279,55 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 
 <!-- default things -->
 <office:font-face-decls>
- <style:font-face style:name="Gentium"
-   svg:font-family="Gentium"
+
+ <!-- font R, B and I -->
+ <style:font-face style:name="Linux Libertine"
+   svg:font-family="&apos;Linux Libertine&apos;"
    style:font-family-generic="roman"
    style:font-pitch="variable"/>
+
+ <!-- font C -->
+ <style:font-face style:name="Linux Libertine G:smcp=1&amp;lnum=1"
+   svg:font-family="&apos;Linux Libertine G:smcp=1&apos;"
+   style:font-family-generic="roman"
+   style:font-adornments="Normal"
+   style:font-pitch="variable"/>
+
+ <!-- font A -->
+ <style:font-face style:name="Linux Libertine G:smcp=1&amp;lnum=1&amp;c2sc=1"
+   svg:font-family="&apos;Linux Libertine G:smcp=1&amp;lnum=1&amp;c2sc=1&apos;"
+   style:font-family-generic="roman"
+   style:font-adornments="Normal"
+   style:font-pitch="variable"/>
+
+ <!-- font U -->
+ <style:font-face style:name="Linux Libertine G:sups=1"
+   svg:font-family="&apos;Linux Libertine G:sups=1&apos;"
+   style:font-family-generic="roman"
+   style:font-adornments="Normal"
+   style:font-pitch="variable"/>
+
+ <!-- font L -->
+ <style:font-face style:name="Linux Libertine G:sinf=1"
+   svg:font-family="&apos;Linux Libertine G:sinf=1&apos;"
+   style:font-family-generic="roman"
+   style:font-adornments="Normal"
+   style:font-pitch="variable"/>
+
+ <!-- TODO: font F -->
+ <style:font-face style:name="Linux Libertine"
+   svg:font-family="&apos;Linux Libertine&apos;"
+   style:font-family-generic="roman"
+   style:font-adornments="Normal"
+   style:font-pitch="variable"/>
+
+ <!-- font M -->
+ <style:font-face style:name="Linux Libertine Mono"
+   svg:font-family="&apos;Linux Libertine Mono&apos;"
+   style:font-family-generic="roman"
+   style:font-adornments="Normal"
+   style:font-pitch="variable"/>
+
 </office:font-face-decls>
 
 
@@ -203,7 +341,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
    style:tab-stop-distance="1.251cm"
    style:writing-mode="page"/>
   <style:text-properties style:use-window-font-color="true"
-   style:font-name="Gentium" 
+   style:font-name="Linux Libertine" 
    fo:font-size="12pt"
    fo:language="fr"
    fo:country="FR"
@@ -441,77 +579,105 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     text:start-value="0"/>
 
 <!-- fonts -->
+  <!-- default fonts -->
  <style:style style:name="R" style:family="text">
-  <style:text-properties fo:font-style="normal"/>
+  <style:text-properties style:font-name="Linux Libertine" fo:font-style="normal"/>
  </style:style>
  <style:style style:name="B" style:family="text">
-  <style:text-properties fo:font-style="bold"/>
+  <style:text-properties style:font-name="Linux Libertine" fo:font-weight="bold"/>
  </style:style>
  <style:style style:name="I" style:family="text">
-  <style:text-properties fo:font-style="italic"/>
+  <style:text-properties style:font-name="Linux Libertine" fo:font-style="italic"/>
  </style:style>
  <style:style style:name="BI" style:family="text">
-  <style:text-properties fo:font-style="bold-italic"/>
+  <style:text-properties style:font-name="Linux Libertine" fo:font-weight="bold" fo:font-style="italic"/>
  </style:style>
 
-  <!-- should be capital to small-capital -->
+  <!-- font A acronym -->
  <style:style style:name="A" style:family="text">
-  <style:text-properties fo:font-style="normal"/>
+  <style:text-properties style:font-name="Linux Libertine G:smcp=1&amp;lnum=1&amp;c2sc=1" fo:font-style="normal"/>
  </style:style>
  <style:style style:name="BA" style:family="text">
-  <style:text-properties fo:font-style="bold"/>
+  <style:text-properties style:font-name="Linux Libertine G:smcp=1&amp;lnum=1&amp;c2sc=1" fo:font-weight="bold"/>
  </style:style>
  <style:style style:name="IA" style:family="text">
-  <style:text-properties fo:font-style="italic"/>
+  <style:text-properties style:font-name="Linux Libertine G:smcp=1&amp;lnum=1&amp;c2sc=1" fo:font-style="italic"/>
  </style:style>
  <style:style style:name="BIA" style:family="text">
-  <style:text-properties fo:font-style="bold-italic"/>
+  <style:text-properties style:font-name="Linux Libertine G:smcp=1&amp;lnum=1&amp;c2sc=1" fo:font-weight="bold" fo:font-style="italic"/>
  </style:style>
 
-  <!-- should be small-capital -->
+  <!-- font C small caps -->
  <style:style style:name="C" style:family="text">
-  <style:text-properties fo:font-style="normal"/>
+  <style:text-properties style:font-name="Linux Libertine G:smcp=1&amp;lnum=1" fo:font-style="normal"/>
  </style:style>
  <style:style style:name="BC" style:family="text">
-  <style:text-properties fo:font-style="bold"/>
+  <style:text-properties style:font-name="Linux Libertine G:smcp=1&amp;lnum=1" fo:font-weight="bold"/>
  </style:style>
  <style:style style:name="IC" style:family="text">
-  <style:text-properties fo:font-style="italic"/>
+  <style:text-properties style:font-name="Linux Libertine G:smcp=1&amp;lnum=1" fo:font-style="italic"/>
  </style:style>
  <style:style style:name="BIC" style:family="text">
-  <style:text-properties fo:font-style="bold-italic"/>
+  <style:text-properties style:font-name="Linux Libertine G:smcp=1&amp;lnum=1" fo:font-weight="bold" fo:font-style="italic"/>
  </style:style>
 
-  <!-- should be final glyphs (decoration) -->
+  <!-- Font F final glyphs -->
  <style:style style:name="F" style:family="text">
   <style:text-properties fo:font-style="normal"/>
  </style:style>
  <style:style style:name="BF" style:family="text">
-  <style:text-properties fo:font-style="bold"/>
+  <style:text-properties fo:font-weight="bold"/>
  </style:style>
  <style:style style:name="IF" style:family="text">
   <style:text-properties fo:font-style="italic"/>
  </style:style>
  <style:style style:name="BIF" style:family="text">
-  <style:text-properties fo:font-style="bold-italic"/>
+  <style:text-properties fo:font-weight="bold" fo:font-style="italic"/>
  </style:style>
 
+  <!-- font U superscript -->
  <style:style style:name="U" style:family="text">
-  <style:text-properties fo:font-style="normal"
-   style:text-position="super 58%"/>
+  <style:text-properties style:font-name="Linux Libertine G:sups=1" fo:font-style="normal"/>
  </style:style>
  <style:style style:name="BU" style:family="text">
-  <style:text-properties fo:font-style="bold"
-   style:text-position="super 58%"/>
+  <style:text-properties style:font-name="Linux Libertine G:sups=1" fo:font-weight="bold"/>
  </style:style>
  <style:style style:name="IU" style:family="text">
-  <style:text-properties fo:font-style="italic"
-   style:text-position="super 58%"/>
+  <style:text-properties style:font-name="Linux Libertine G:sups=1" fo:font-style="italic"/>
  </style:style>
  <style:style style:name="BIU" style:family="text">
-  <style:text-properties fo:font-style="bold-italic"
-   style:text-position="super 58%"/>
+  <style:text-properties style:font-name="Linux Libertine G:sups=1" fo:font-weight="bold" fo:font-style="italic"/>
  </style:style>
+
+
+  <!-- font L downscript -->
+ <style:style style:name="L" style:family="text">
+  <style:text-properties style:font-name="Linux Libertine G:sinf=1" fo:font-style="normal"/>
+ </style:style>
+ <style:style style:name="BL" style:family="text">
+  <style:text-properties style:font-name="Linux Libertine G:sinf=1" fo:font-weight="bold"/>
+ </style:style>
+ <style:style style:name="IL" style:family="text">
+  <style:text-properties style:font-name="Linux Libertine G:sinf=1" fo:font-style="italic"/>
+ </style:style>
+ <style:style style:name="BIL" style:family="text">
+  <style:text-properties style:font-name="Linux Libertine G:sinf=1" fo:font-weight="bold" fo:font-style="italic"/>
+ </style:style>
+
+  <!-- font M monospace -->
+ <style:style style:name="M" style:family="text">
+  <style:text-properties style:font-name="Linux Libertine Mono" fo:font-style="normal"/>
+ </style:style>
+ <style:style style:name="BM" style:family="text">
+  <style:text-properties style:font-name="Linux Libertine Mono" fo:font-weight="bold"/>
+ </style:style>
+ <style:style style:name="IM" style:family="text">
+  <style:text-properties style:font-name="Linux Libertine Mono" fo:font-style="italic"/>
+ </style:style>
+ <style:style style:name="BIM" style:family="text">
+  <style:text-properties style:font-name="Linux Libertine Mono" fo:font-weight="bold" fo:font-style="italic"/>
+ </style:style>
+
 
  <text:linenumbering-configuration text:number-lines="false"
   text:offset="0.499cm"
