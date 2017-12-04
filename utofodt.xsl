@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- $Id: utofodt.xsl,v 0.7 2013/04/07 17:15:42 pj Exp pj $ -->
+<!-- $Id: utofodt.xsl,v 0.8 2014/03/20 20:30:17 pj Exp pj $ -->
 
 <xsl:stylesheet version="1.0"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -95,11 +95,30 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   <text:p text:style-name="Text_right_align"><xsl:apply-templates/></text:p>
 </xsl:template>
 <xsl:template match="PC">
-  <text:p text:style-name="Text_code"><xsl:apply-templates/></text:p>
+  <text:p text:style-name="Text_centered"><xsl:apply-templates/></text:p>
 </xsl:template>
 <xsl:template match="PX">
-  <text:p text:style-name="Text_example"><xsl:apply-templates/></text:p>
+  <text:p text:style-name="Text_example">
+	  <xsl:call-template name="lines"/>
+  </text:p>
 </xsl:template>
+
+<!--
+	 Add line-break element at the end of each line, cf:
+	 https://stackoverflow.com/questions/9446487/xslt-take-line-by-line-from-the-text-of-some-element
+-->
+<xsl:template name="lines">
+  <xsl:param name="pText" select="."/>
+  <xsl:if test="string-length($pText)">
+	<xsl:value-of select="substring-before(concat($pText, '&#xA;'), '&#xA;')"/>
+    <text:line-break/>
+    <xsl:call-template name="lines">
+      <xsl:with-param name="pText" select="substring-after($pText, '&#xA;')"/>
+    </xsl:call-template>
+  </xsl:if>
+</xsl:template>
+
+
 
 <!-- lists -->
 <xsl:template match="PLIST">
@@ -259,6 +278,42 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   </text:span>
 </xsl:template>
 
+<!-- ugrind fonts -->
+<xsl:template match="codeK">
+  <text:span>
+    <xsl:attribute name="text:style-name">
+  <xsl:text>codeK</xsl:text>
+    </xsl:attribute>
+    <xsl:apply-templates/>
+  </text:span>
+</xsl:template>
+
+<xsl:template match="codeV">
+  <text:span>
+    <xsl:attribute name="text:style-name">
+  <xsl:text>codeV</xsl:text>
+    </xsl:attribute>
+    <xsl:apply-templates/>
+  </text:span>
+</xsl:template>
+
+<xsl:template match="codeC">
+  <text:span>
+    <xsl:attribute name="text:style-name">
+  <xsl:text>codeC</xsl:text>
+    </xsl:attribute>
+    <xsl:apply-templates/>
+  </text:span>
+</xsl:template>
+
+<xsl:template match="codeS">
+  <text:span>
+    <xsl:attribute name="text:style-name">
+  <xsl:text>codeS</xsl:text>
+    </xsl:attribute>
+    <xsl:apply-templates/>
+  </text:span>
+</xsl:template>
 
 
 <!-- root -->
@@ -487,32 +542,37 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   style:auto-text-indent="false"/>
  </style:style>
 
- <style:style style:name="Text_code"
-  style:display-name="Text code"
+ <style:style style:name="Text_centered"
+  style:display-name="Text centered"
   style:family="paragraph"
   style:parent-style-name="Text_body"
   style:class="text">
  <style:paragraph-properties
+  fo:text-align="center"
   fo:margin="100%"
   fo:margin-left="2cm"
   fo:margin-right="2cm"
   fo:text-indent="0cm"
   style:auto-text-indent="false"/>
-  <style:text-properties fo:font-size="10pt"/>
  </style:style>
 
  <style:style style:name="Text_example"
   style:display-name="Text example"
   style:family="paragraph"
   style:parent-style-name="Text_body"
-  style:class="text">
+  style:class="html">
  <style:paragraph-properties
+  fo:text-align="start"
   fo:margin="100%"
   fo:margin-left="2cm"
   fo:margin-right="2cm"
   fo:text-indent="0cm"
-  style:auto-text-indent="false"/>
-  <style:text-properties fo:font-style="italic"/>
+  style:justif-single-word="false"
+  style:auto-text-indent="false"
+  style:font-name="Linux Libertine Mono"
+  style:font-pitch="fixed"
+  fo:font-style="normal"
+  fo:font-size="10pt"/>
  </style:style>
 
 <!-- lists -->
@@ -676,6 +736,24 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
  </style:style>
  <style:style style:name="BIM" style:family="text">
   <style:text-properties style:font-name="Linux Libertine Mono" fo:font-weight="bold" fo:font-style="italic"/>
+ </style:style>
+
+ <!-- font K, V, C, S code and ugrind fonts -->
+ <!-- code keyword -->
+ <style:style style:name="codeK" style:family="text">
+  <style:text-properties style:font-name="Linux Libertine Mono" fo:font-style="bold"/>
+ </style:style>
+ <!-- code variable -->
+ <style:style style:name="codeV" style:family="text">
+  <style:text-properties style:font-name="Linux Libertine Mono" fo:font-style="normal"/>
+ </style:style>
+ <!-- code comment -->
+ <style:style style:name="codeC" style:family="text">
+  <style:text-properties style:font-name="Linux Libertine Mono" fo:font-style="normal"/>
+ </style:style>
+ <!-- code string -->
+ <style:style style:name="codeS" style:family="text">
+  <style:text-properties style:font-name="Linux Libertine Mono" fo:font-style="italic"/>
  </style:style>
 
 
