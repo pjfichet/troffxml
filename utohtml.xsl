@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- $Id: utohtml.xsl,v 0.8 2013/04/07 17:15:42 pj Exp pj $ -->
+<!-- $Id: utohtml.xsl,v 0.9 2014/03/20 20:33:43 pj Exp pj $ -->
 
 <xsl:stylesheet version="1.0"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -70,9 +70,9 @@ xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 </xsl:template>
 
 <!-- notes -->
-<xsl:template match="N">
+<xsl:template match="NN">
   <span class="U"><a>
-    <xsl:attribute name="name">N<xsl:value-of select="@num"/></xsl:attribute>
+    <xsl:attribute name="name">NN<xsl:value-of select="@num"/></xsl:attribute>
     <xsl:attribute name="href">#N<xsl:value-of select="@num"/></xsl:attribute>
     <xsl:value-of select="@num"/>
   </a></span>
@@ -82,48 +82,58 @@ xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <xsl:template match="NB"></xsl:template>
 
 <!-- inline, index, links -->
+<xsl:template match="LN">
+  <a>
+    <xsl:attribute name="name">name-<xsl:value-of select="@name"/></xsl:attribute>
+    <xsl:apply-templates/>
+  </a>
+</xsl:template>
+<xsl:template match="LO">
+  <a>
+    <xsl:attribute name="name">object-<xsl:value-of select="@name"/></xsl:attribute>
+    <xsl:apply-templates/>
+  </a>
+</xsl:template>
+<xsl:template match="LT">
+  <a>
+    <xsl:attribute name="name">title-<xsl:value-of select="@name"/></xsl:attribute>
+    <xsl:apply-templates/>
+  </a>
+</xsl:template>
+<xsl:template match="LW">
+  <a>
+	<xsl:attribute name="name">word-<xsl:value-of select="@name"/></xsl:attribute>
+    <xsl:apply-templates/>
+  </a>
+</xsl:template>
 <xsl:template match="LA">
   <acronym>
 	<xsl:attribute name="title"><xsl:value-of select="@name"/></xsl:attribute>
 	<xsl:apply-templates/>
   </acronym>
 </xsl:template>
-<xsl:template match="LC"></xsl:template>
-<xsl:template match="LD"></xsl:template>
-<xsl:template match="LE"></xsl:template>
-<xsl:template match="LI"></xsl:template>
 <xsl:template match="LK">
  <a>
-    <xsl:attribute name="name"><xsl:value-of select="@num"/></xsl:attribute>
+    <xsl:attribute name="name"><xsl:value-of select="@name"/></xsl:attribute>
 	<xsl:apply-templates/>
   </a>
 </xsl:template>
 <xsl:template match="LL">
   <a>
-	<xsl:attribute name="href"><xsl:value-of select="@name"/></xsl:attribute>
+	<!-- internal link, use #name -->
+	<xsl:attribute name="href">#<xsl:value-of select="@name"/></xsl:attribute>
 	<xsl:apply-templates/>
   </a>
 </xsl:template>
 <xsl:template match="LM">
   <a>
-	<xsl:attribute name="mailto"><xsl:value-of select="@name"/></xsl:attribute>
+	<xsl:attribute name="href">mailto:<xsl:value-of select="@name"/></xsl:attribute>
 	<xsl:apply-templates/>
   </a>
 </xsl:template>
-<xsl:template match="LN"></xsl:template>
-<xsl:template match="LH"></xsl:template>
-<xsl:template match="LO"></xsl:template>
-<xsl:template match="LS"></xsl:template>
-<xsl:template match="LT"></xsl:template>
 <xsl:template match="LU">
   <a>
 	<xsl:attribute name="href"><xsl:value-of select="@name"/></xsl:attribute>
-	<xsl:apply-templates/>
-  </a>
-</xsl:template>
-<xsl:template match="LM">
-  <a>
-	<xsl:attribute name="mailto"><xsl:value-of select="@name"/></xsl:attribute>
 	<xsl:apply-templates/>
   </a>
 </xsl:template>
@@ -177,6 +187,32 @@ xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <xsl:apply-templates/>
   </span>
 </xsl:template>
+<!-- uGrind fonts -->
+<xsl:template match="codeK">
+  <span>
+    <xsl:attribute name="class">codeK</xsl:attribute>
+    <xsl:apply-templates/>
+  </span>
+</xsl:template>
+<xsl:template match="codeV">
+  <span>
+    <xsl:attribute name="class">codeV</xsl:attribute>
+    <xsl:apply-templates/>
+  </span>
+</xsl:template>
+<xsl:template match="codeC">
+  <span>
+    <xsl:attribute name="class">codeC</xsl:attribute>
+    <xsl:apply-templates/>
+  </span>
+</xsl:template>
+<xsl:template match="codeS">
+  <span>
+    <xsl:attribute name="class">codeS</xsl:attribute>
+    <xsl:apply-templates/>
+  </span>
+</xsl:template>
+
 
 
 <!-- root -->
@@ -240,7 +276,6 @@ xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 
 <body>
   <!-- top notes -->
-    <div class="content" id="top">
     <xsl:if test="//NT">
       <div class="top">
         <xsl:for-each select="//NT">
@@ -265,8 +300,8 @@ xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
       <xsl:for-each select="//NS">
         <p>
           <a>
-            <xsl:attribute name="name">NN<xsl:value-of select="@num"/></xsl:attribute>
-            <xsl:attribute name="href">#N<xsl:value-of select="@num"/></xsl:attribute>
+            <xsl:attribute name="name">N<xsl:value-of select="@num"/></xsl:attribute>
+            <xsl:attribute name="href">#NN<xsl:value-of select="@num"/></xsl:attribute>
             <xsl:value-of select="@num"/>
           </a>
           <xsl:text>) </xsl:text>
@@ -291,7 +326,6 @@ xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
       </div>
     </xsl:if>
 
-  </div>
 </body>
 </html>
 </xsl:template>
