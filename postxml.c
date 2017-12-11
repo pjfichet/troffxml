@@ -27,7 +27,7 @@
 ** NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 ** THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 **
-** $Id$
+** $Id: postxml.c,v 0.2 2013/02/12 10:33:55 pj Exp pj $
 */
 
 /*
@@ -45,6 +45,7 @@
 /*
 ** Read input stream
 ** If \n#-\n is found, delete it
+** Any following #- are deleted
 ** Replace '#[' and ']#' by '<' and '>'
 ** Replace '#(' and ')#' by '&' and ';'
 ** Replace '#~' by '#'.
@@ -57,20 +58,28 @@ main(void)
 	int tag=0; // replace tag
 	while( (c=getchar()) != EOF){
 		// delete
-		if( del==0 && c=='\n'){
+		if( (del==0 || del==1 || del==4) && c=='\n'){
+			// if del==1: repeated newlines don't reset the count
+			// if del==4: any following #- are deleted
 			del=1;
 			tag=0;
 		}
 		else if( del==1 && c=='#'){
+			// we will print a newline if we replace that tag
 			del=2;
 			tag=1;
 		}
-		else if( del==2 && c=='-'){
+		else if( del==4 && c=='#'){
+			// we will not print a newline if we replace that tag
+			del=5;
+			tag=1;
+		}
+		else if( (del==2 || del==5) && c=='-'){
 			del=3;
 			tag=0;
 		}
 		else if( del==3 && c=='\n'){
-			del=0;
+			del=4;
 			tag=0;
 		}
 
