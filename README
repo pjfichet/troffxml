@@ -1,33 +1,36 @@
-# Troffxml readme
-###################
+Troffxml - nroff processors to build xml files.
+===============================================
 
-# Presentation
-==============
+Presentation
+------------
 
-Troffxml provide a solution to build an xml file from a troff
+Troffxml provides a solution to build an xml file from a troff
 document that rely on nroff. A nroff macro (for example ux, from
-utmac) is used to build a flat text of the document which contain
+utmac) is used to build a flat text of the document which contains
 tags that a postprocessor (postxml) will convert to xml. A
-preprocessor (prexml) escape these tags if they are present in
-the source document. A final pipe program (trxtr) will translate
-the xml file to a famous xml format.
+preprocessor (prexml) escapes these tags if they are present in the
+source document.  A final xslt processor will translate the xml file
+to a famous xml format.
 
-# Build
-=======
+	prexml < file.tr | nroff -Tutf8 ‐mux | postxml > file.xml
+	xsltproc utohtml.xsl file.xml > file.html
+	xsltproc utofodt.xsl file.xml > file.fodt
 
-To build and install tchars and its manual page, run :
+Build and install
+-----------------
+
+To build and install tchars and its manual page, run:
 
     make
     make install
 
-To uninstall and clean, run :
+To uninstall and clean, run:
 
     make uninstall
     make clean
 
+License
+-------
 
-# License
-=========
-
-Prexml, postxml and their manual page are distributed under the ISC license.
-
+Prexml, postxml and their manual page are distributed under the ISC
+license.
