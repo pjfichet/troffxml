@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- $Id: utohtml.xsl,v 0.9 2014/03/20 20:33:43 pj Exp pj $ -->
+<!-- $Id: utohtml.xsl,v 0.10 2017/12/04 10:36:28 pj Exp pj $ -->
 
 <xsl:stylesheet version="1.0"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -81,37 +81,39 @@ xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <xsl:template match="NS"></xsl:template>
 <xsl:template match="NB"></xsl:template>
 
-<!-- inline, index, links -->
-<xsl:template match="LN">
+<!-- Keywords to index -->
+<xsl:template match="KA">
+  <a>
+	<xsl:attribute name="name">acronym-<xsl:value-of select="@name"/></xsl:attribute>
+	<xsl:apply-templates/>
+  </a>
+</xsl:template>
+<xsl:template match="KN">
   <a>
     <xsl:attribute name="name">name-<xsl:value-of select="@name"/></xsl:attribute>
     <xsl:apply-templates/>
   </a>
 </xsl:template>
-<xsl:template match="LO">
+<xsl:template match="KO">
   <a>
     <xsl:attribute name="name">object-<xsl:value-of select="@name"/></xsl:attribute>
     <xsl:apply-templates/>
   </a>
 </xsl:template>
-<xsl:template match="LT">
+<xsl:template match="KT">
   <a>
     <xsl:attribute name="name">title-<xsl:value-of select="@name"/></xsl:attribute>
     <xsl:apply-templates/>
   </a>
 </xsl:template>
-<xsl:template match="LW">
+<xsl:template match="KW">
   <a>
 	<xsl:attribute name="name">word-<xsl:value-of select="@name"/></xsl:attribute>
     <xsl:apply-templates/>
   </a>
 </xsl:template>
-<xsl:template match="LA">
-  <acronym>
-	<xsl:attribute name="title"><xsl:value-of select="@name"/></xsl:attribute>
-	<xsl:apply-templates/>
-  </acronym>
-</xsl:template>
+
+<!-- Links -->
 <xsl:template match="LK">
  <a>
     <xsl:attribute name="name"><xsl:value-of select="@name"/></xsl:attribute>
