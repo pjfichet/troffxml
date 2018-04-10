@@ -19,7 +19,11 @@ to a famous xml format.
 Build and install
 -----------------
 
-To build and install tchars and its manual page, run:
+These tools have not been tested with the Groff implementation of
+nroff, so you probably need to install heirloom nroff, from
+<https://github.com/n-t-roff/heirloom-doctools>.
+
+To build and install run:
 
     make
     make install
