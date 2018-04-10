@@ -1,0 +1,33 @@
+# Troffxml readme
+###################
+
+# Presentation
+==============
+
+Troffxml provide a solution to build an xml file from a troff
+document that rely on nroff. A nroff macro (for example ux, from
+utmac) is used to build a flat text of the document which contain
+tags that a postprocessor (postxml) will convert to xml. A
+preprocessor (prexml) escape these tags if they are present in
+the source document. A final pipe program (trxtr) will translate
+the xml file to a famous xml format.
+
+# Build
+=======
+
+To build and install tchars and its manual page, run :
+
+    make
+    make install
+
+To uninstall and clean, run :
+
+    make uninstall
+    make clean
+
+
+# License
+=========
+
+Tchars and its man page are distributed under a
+

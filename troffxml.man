@@ -1,0 +1,172 @@
+.\"
+.\" DA Pierre‐Jean Fichet
+.\" DS Utroff prexml and postxml manual
+.\" DT Utroff prexml and postxml manual
+.\" DK utroff prexml postxml troff nroff heirloom tmac xml
+.
+.
+.
+.TH PREXML & POSTXML 1 ´2017‐12‐11´
+.
+.
+.
+.SH NAME
+.PP
+\fBprexml postxml\fR - \fInroff\fR processors to build xml
+files.
+.
+.
+.
+.SH SYNOPSIS
+.PP
+\fBprexml\fR < \fIfile.tr\fR |
+\fBnroff\fR \fB‐m\fR\fIux\fR |
+\fBpostxml\fR > \fIfile.xml\fR
+.
+.
+.
+.SH DESCRIPTION
+.PP
+\fIPostxml\fR provides a solution to build
+an xml file from a troff document that relies on \fInroff\fR
+itself. Since \fInroff\fR builds a plain text file from a troff
+document, it can be used, with an appropriate macro, to
+produce an intermediate file that \fIpostxml\fR
+will translate to xml.
+.PP
+That intermediate file contains tags that \fIpostxml\fR will
+transform to xml tags. If these tags are present in the
+source file, and need to be printed as is, \fIprexml\fR
+simply escapes these tags so that \fIpostxml\fR won’t
+substitute them.
+.PP
+Since the final xml file might contain utf‐8 characters, the
+\fB‐T\fR\fIlocale\fR option of \fInroff\fR must be used.
+\fIUtmac\fR provides the \fIux\fR macro that aims to be used with
+prexml and postxml. \fITroffxml\fR comes with xsl
+stylesheets to create open document and html files.
+So, the command line could be:
+.PP
+.EX
+prexml \fB<\fR file.tr \fB|\fR nroff -Tlocale \
+-mux \fB|\fR postxml \fB>\fR file.xml
+xsltproc utohtml.xsl file.xml \fB>\fR file.html
+xsltproc utofodt.xsl file.xml \fB>\fR file.fodt
+.EE
+.
+.
+.
+.SH TAGS
+.
+.
+.
+.SS Postxml
+.RS 3
+.PP
+\fIPostxml\fR will substitute the following tags.
+.TP
+\&\fB#[\fR
+Replaced by \fB<\fR.
+.TP
+\&\fB#]\fR
+Replaced by \fB>\fR.
+.TP
+\&\fB#(\fR
+Replaced by \fB&\fR.
+.TP
+\&\fB#)\fR
+Replaced by \fB;\fR.
+.TP
+\&\fB#~\fR
+Replaced by \fB#\fR.
+.TP
+\&\fB\Een#‐\Een\fR
+Removed from stream.
+.PP
+So the following text:
+.PP
+.EX
+Some text
+\fI#-\fR
+\fB#[\fRa\fB#]\fR
+\fI#-\fR
+note text
+\fB#[\fR/a\fB#]\fR
+\fB#(lt#)\fR.
+.EE
+.PP
+Will be transform in:
+.PP
+.EX
+Some text\fB<\fRa\fB>\fRnote text\fB</\fRa\fB>\fR \fB&lt;\fR.
+.EE
+.
+.
+.
+.SS Prexml
+.RS 3
+.PP
+All these tags will be escaped by \fIprexml\fR if they are
+present in the original file, following these rules:
+.TP
+\&\fB#[\fR
+Replaced by \fB#~[\fR.
+.TP
+\&\fB#]\fR
+Replaced by \fB#~]\fR.
+.TP
+\&\fB#(\fR
+Replaced by \fB#~(\fR.
+.TP
+\&\fB#)\fR
+Replaced by \fB#~)\fR.
+.TP
+\&\fB#~\fR
+Replaced by \fB#~~\fR.
+.TP
+\&\fB\Een#‐\Een\fR
+Replaced by \fB#~‐\fR.
+.
+.
+.
+.SH FILES
+.TP
+\&\fI@BINDIR@/prexml\fR \fI@BINDIR@/postxml\fR
+Executables.
+.TP
+\&\fI@XSLDIR@/utohtml.xsl\fR
+XSL stylesheet to transform an utmac document to html.
+.TP
+\&\fI@XSLDIR@/utofodt.xsl\fR
+XSL stylesheet to transform an utmac document to flat odt.
+.TP
+\&\fI@XSLDIR@/utmac.ott\fR
+Open Document Text Template close to Utmac.
+.
+.
+.
+.SH SEE ALSO
+.PP
+nroff(1).
+.
+.
+.
+.SH LICENSE
+.PP
+\fIPrexml\fR, \fIpostxml\fR and this man page are
+distributed under a
+two clause BSD
+license.
+.
+.
+.
+.SH BUGS & HELP
+.PP
+Please, send questions bugs, and patches at help at utroff
+dot org.
+.
+.
+.
+.SH AUTHOR
+.PP
+Written by Pierre‐Jean Fichet.

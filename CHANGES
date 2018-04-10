@@ -1,0 +1,22 @@
+# 2017-12-11
+------------
+
+Utmac now uses KA, KN, KT, KO, KW macros to index some keywords.
+These changes are reflected on utohtml.xsl.
+
+Bugfixes in postxml : any number of following #- are deleted, and
+#- are not ignored after repeated newlines.
+
+# 2017/12/08 troffxml-0.5
+-------------------------
+
+Utofodt.xsl attempts to render the code formatted by Ugrind
+correctly.  Utohtml.xsl has a better support for index macros and
+links.
+
+# 2017/12/01 troffxml-0.4
+-------------------------
+
+Separating troffxml from the Utroff archive.  A bug affecting
+internal links to bottom notes is fixed in utohtml.xsl.
+
