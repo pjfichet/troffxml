@@ -1,15 +1,15 @@
 # Packaging directory
 DESTDIR=
 # Prefix directory
-PREFIX=/usr/local
+PREFIX=/opt/utroff
 # Where to place binaries
 BINDIR=$(PREFIX)/bin
 # Where to place libraries
 MANDIR=$(PREFIX)/man
 # Library directory
-LIBDIR=$(PREFIX)/share/
+LIBDIR=$(PREFIX)/lib
 # XSL directory
-XSLDIR=$(LIBDIR)/troffxml
+XSLDIR=$(LIBDIR)/xslt
 
 
 # C compiler
@@ -37,15 +37,15 @@ clean:
 		-e "s|@XSLDIR@|$(XSLDIR)|g" $< > $@
 
 $(DESTDIR)$(BINDIR)/%: %
-	test -d $(DESTDIR)$(BINDIR) || mkdir -p $(DESTDIR)$(BINDIR)
+	@test -d $(DESTDIR)$(BINDIR) || mkdir -p $(DESTDIR)$(BINDIR)
 	install -c $< $@
 
 $(DESTDIR)$(XSLDIR)/%: %
-	test -d $(DESTDIR)$(XSLDIR) || mkdir -p $(DESTDIR)$(XSLDIR)
+	@test -d $(DESTDIR)$(XSLDIR) || mkdir -p $(DESTDIR)$(XSLDIR)
 	install -c -m 644 $< $@
 
 $(DESTDIR)$(MANDIR)/man1/troffxml.1: troffxml.1
-	test -d $(DESTDIR)$(MANDIR)/man1 || mkdir -p $(DESTDIR)$(MANDIR)/man1
+	@test -d $(DESTDIR)$(MANDIR)/man1 || mkdir -p $(DESTDIR)$(MANDIR)/man1
 	install -c -m 644 $< $@
 	cd $(DESTDIR)$(MANDIR)/man1 && ln -s troffxml.1 prexml.1
 	cd $(DESTDIR)$(MANDIR)/man1 && ln -s troffxml.1 postxml.1
