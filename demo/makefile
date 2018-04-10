@@ -7,7 +7,7 @@ PREXML=/home/pj/dev/bin/prexml
 # postxml binary
 POSTXML=/home/pj/dev/bin/postxml
 # heirloom nroff 
-NROFF=/usr/ucb/bin/nroff -Tlocale
+NROFF=/usr/local/ucb/bin/nroff -Tlocale
 
 all: troffxml.html troffxml.fodt
 
