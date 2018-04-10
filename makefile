@@ -1,81 +1,63 @@
 # Packaging directory
 DESTDIR=
 # Prefix directory
-PREFIX=/opt/utroff
+PREFIX=/usr/local
 # Where to place binaries
 BINDIR=$(PREFIX)/bin
 # Where to place libraries
 MANDIR=$(PREFIX)/man
 # Library directory
-LIBDIR=$(PREFIX)/lib
+LIBDIR=$(PREFIX)/share/
 # XSL directory
-XSLDIR=$(LIBDIR)/xsl
+XSLDIR=$(LIBDIR)/troffxml
 
-# Install binary
-INSTALL = /usr/bin/install
+
 # C compiler
-CC=gcc
+CC=cc
 # compilier flags
-CFLAGS=-O
-# Compiler warning
-WARN=-Wall
-# Support for locale specific character 
-EUC=-DEUC
+CFLAGS=-Wall -O
 # Linker flags
 LDFLAGS=
-# Additionnal libraries to link with
-LIBS=
-# C preprocessor flags.
-# Use -D_GNU_SOURCE for Linux with GNU libc.
-# Use -D_INCLUDE__STDC_A1_SOURCE for HP-UX.
-CPPFLAGS=-D_GNU_SOURCE
-# Strip
-STRIP=strip -s -R .comment -R .note
+BINS=prexml postxml
 
-BIN=prexml postxml
-MAN=troffxml.1 prexml.1 postxml.1
-XSL=utmac.ott utofodt.xsl utohtml.xsl
+XSLT=utmac.ott utofodt.xsl utohtml.xsl
 
-
-all: $(BIN) troffxml.1
+all: $(BINS) troffxml.1
 
 clean:
-	rm -rf $(BIN) troffxml.1
+	rm -rf $(BINS) $(BINS:%=%.o) troffxml.1
+
+%.o: %.c
+	$(CC) -c $(CFLAGS) $<
+%: %.o
+	$(CC) -o $@ $< $(LDFLAGS)
 
 %.1 %.7: %.man
 	sed -e "s|@BINDIR@|$(BINDIR)|g" \
 		-e "s|@XSLDIR@|$(XSLDIR)|g" $< > $@
 
-postxml.1 prexml.1: troffxml.1
-	ln -s $< $@
+$(DESTDIR)$(BINDIR)/%: %
+	test -d $(DESTDIR)$(BINDIR) || mkdir -p $(DESTDIR)$(BINDIR)
+	install -c $< $@
 
+$(DESTDIR)$(XSLDIR)/%: %
+	test -d $(DESTDIR)$(XSLDIR) || mkdir -p $(DESTDIR)$(XSLDIR)
+	install -c -m 644 $< $@
 
-$(DESTDIR)$(BINDIR) \
-$(DESTDIR)$(XSLDIR) \
-$(DESTDIR)$(MANDIR)/man1:
-	test -d $@ || mkdir -p $@
+$(DESTDIR)$(MANDIR)/man1/troffxml.1: troffxml.1
+	test -d $(DESTDIR)$(MANDIR)/man1 || mkdir -p $(DESTDIR)$(MANDIR)/man1
+	install -c -m 644 $< $@
+	cd $(DESTDIR)$(MANDIR)/man1 && ln -s troffxml.1 prexml.1
+	cd $(DESTDIR)$(MANDIR)/man1 && ln -s troffxml.1 postxml.1
 
-$(DESTDIR)$(MANDIR)/man1/%: % $(DESTDIR)$(MANDIR)/man1
-	$(INSTALL) -c -m 644 $(@F) $@
-
-$(DESTDIR)$(MANDIR)/man1/prexml.1 \
-$(DESTDIR)$(MANDIR)/man1/postxml.1: $(DESTDIR)$(MANDIR)/man1/troffxml.1
-	-cd $(DESTDIR)$(MANDIR)/man1/ && ln -s troffxml.1 $(@F)
-
-$(DESTDIR)$(BINDIR)/%: % $(DESTDIR)$(BINDIR)
-	$(INSTALL) -c $(@F) $@
-
-$(DESTDIR)$(XSLDIR)/%: % $(DESTDIR)$(XSLDIR)
-	$(INSTALL) -c -m 644 $(@F) $@
-
-install: $(BIN:%=$(DESTDIR)$(BINDIR)/%) $(MAN:%=$(DESTDIR)$(MANDIR)/man1/%) $(XSL:%=$(DESTDIR)$(XSLDIR)/%)
+install: $(BINS:%=$(DESTDIR)$(BINDIR)/%)  \
+		$(XSLT:%=$(DESTDIR)$(XSLDIR)/%) \
+		$(DESTDIR)$(MANDIR)/man1/troffxml.1
 
 uninstall:
-	rm $(BIN:%=$(DESTDIR)$(BINDIR)/%)
-	rmdir $(DESTDIR)$(BINDIR)
-	rm $(MAN:%=$(DESTDIR)$(MANDIR)/man1/%)
-	rmdir $(DESTDIR)$(MANDIR)/man1 $(DESTDIR)$(MANDIR)
-	rm $(XSL:%=$(DESTDIR)$(XSLDIR)/%)
-	rmdir $(DESTDIR)$(XSLDIR) $(DESTDIR)$(LIBDIR)
-
+	rm -f $(BINS:%=$(DESTDIR)$(BINDIR)/%)
+	rm -f $(XSLT:%=$(DESTDIR)$(XSLDIR)/%)
+	rm -f $(DESTDIR)$(MANDIR)/man1/troffxml.1
+	rm -f $(DESTDIR)$(MANDIR)/man1/prexml.1
+	rm -f $(DESTDIR)$(MANDIR)/man1/postxml.1
 
