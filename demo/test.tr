@@ -1,4 +1,4 @@
-.so ux.tmac
+.so example.tmac
 .H1 Book Title
 .H2 Section title
 .H3 Paragraph title
