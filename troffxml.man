@@ -1,8 +1,4 @@
 .\"
-.\" DA Pierre‐Jean Fichet
-.\" DS Utroff prexml and postxml manual
-.\" DT Utroff prexml and postxml manual
-.\" DK utroff prexml postxml troff nroff heirloom tmac xml
 .ig
 Copyright (C) 2012-2018 Pierre Jean Fichet
 <pierrejean dot fichet at posteo dot net>
@@ -19,16 +15,19 @@ WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
 ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ..
+.\" DS Utroff prexml and postxml manual
+.\" DT Utroff prexml and postxml manual
+.\" DK utroff prexml postxml troff nroff heirloom tmac xml
 .
 .
 .
-.TH PREXML & POSTXML 1 ´2017‐12‐11´
+.TH PREXML & POSTXML 1 2018-04-14
 .
 .
 .
 .SH NAME
 .PP
-\fBprexml postxml\fR - \fInroff\fR processors to build xml
+\fBprexml postxml\fR − \fInroff\fR processors to build xml
 files.
 .
 .
@@ -36,7 +35,7 @@ files.
 .SH SYNOPSIS
 .PP
 \fBprexml\fR < \fIfile.tr\fR |
-\fBnroff\fR \fB‐m\fR\fIux\fR |
+\fBnroff\fR \fB-m\fR\fIux\fR |
 \fBpostxml\fR > \fIfile.xml\fR
 .
 .
@@ -53,11 +52,11 @@ will translate to xml.
 That intermediate file contains tags that \fIpostxml\fR will
 transform to xml tags. If these tags are present in the
 source file, and need to be printed as is, \fIprexml\fR
-simply escapes these tags so that \fIpostxml\fR won’t
+simply escapes these tags so that \fIpostxml\fR won't
 substitute them.
 .PP
-Since the final xml file might contain utf‐8 characters, the
-\fB‐T\fR\fIlocale\fR option of \fInroff\fR must be used.
+Since the final xml file might contain utf-8 characters, the
+\fB-T\fR\fIlocale\fR option of \fInroff\fR must be used.
 \fIUtmac\fR provides the \fIux\fR macro that aims to be used with
 prexml and postxml. \fITroffxml\fR comes with xsl
 stylesheets to create open document and html files.
@@ -96,7 +95,7 @@ Replaced by \fB;\fR.
 \&\fB#~\fR
 Replaced by \fB#\fR.
 .TP
-\&\fB\Een#‐\Een\fR
+\&\fB\en#-\en\fR
 Removed from stream.
 .PP
 So the following text:
@@ -140,8 +139,8 @@ Replaced by \fB#~)\fR.
 \&\fB#~\fR
 Replaced by \fB#~~\fR.
 .TP
-\&\fB\Een#‐\Een\fR
-Replaced by \fB#~‐\fR.
+\&\fB\en#-\en\fR
+Replaced by \fB#~-\fR.
 .
 .
 .
@@ -171,18 +170,10 @@ nroff(1).
 .PP
 \fIPrexml\fR, \fIpostxml\fR and this man page are
 distributed under a
-two clause BSD
-license.
-.
-.
-.
-.SH BUGS & HELP
-.PP
-Please, send questions bugs, and patches at help at utroff
-dot org.
+isc license.
 .
 .
 .
 .SH AUTHOR
 .PP
-Written by Pierre‐Jean Fichet.
+Written by Pierre-Jean Fichet.
