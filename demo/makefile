@@ -1,17 +1,17 @@
-# Where to find utroff xsl stylesheet
-XSLDIR=../
-# Prexml binary
-PREXML=../prexml
-# postxml binary
-POSTXML=../postxml
-# heirloom nroff 
-NROFF=/opt/utroff/bin/nroff -Tlocale
+PREFIX=$(HOME)/dev
+BINDIR=$(PREFIX)/bin
+LIBDIR=$(PREFIX)/lib
+XSLDIR=$(LIBDIR)/xslt
+PREXML=$(BINDIR)/prexml
+POSTXML=$(BINDIR)/postxml
+NROFF=groff -k -Tutf8 -M./
+
 
 all: test.html test.fodt
 
 %.xml: %.tr
 	@echo "Generating $@"
-	@$(PREXML) < $< | $(NROFF)  | $(POSTXML) > $@
+	@$(PREXML) < $< | $(NROFF) -mux | $(POSTXML) > $@
 
 %.html: %.xml
 	@echo "Generating $@"

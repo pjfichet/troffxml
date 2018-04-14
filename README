@@ -7,21 +7,17 @@ Presentation
 Troffxml provides a solution to build an xml file from a troff
 document that rely on nroff. A nroff macro (for example ux, from
 utmac) is used to build a flat text of the document which contains
-tags that a postprocessor (postxml) will convert to xml. A
-preprocessor (prexml) escapes these tags if they are present in the
+tags that a post-processor (postxml) will convert to xml. A
+pre-processor (prexml) escapes these tags if they are present in the
 source document.  A final xslt processor will translate the xml file
 to a famous xml format.
 
-	prexml < file.tr | nroff -Tutf8 ‐mux | postxml > file.xml
+	prexml < file.tr | groff -k -Tutf8 ‐mux | postxml > file.xml
 	xsltproc utohtml.xsl file.xml > file.html
 	xsltproc utofodt.xsl file.xml > file.fodt
 
 Build and install
 -----------------
-
-These tools have not been tested with the Groff implementation of
-nroff, so you probably need to install heirloom nroff, from
-<https://github.com/n-t-roff/heirloom-doctools>.
 
 To build and install run:
 
