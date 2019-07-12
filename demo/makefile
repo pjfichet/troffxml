@@ -1,6 +1,6 @@
-PREFIX=$(HOME)/dev
+PREFIX=$(HOME)/.local
 BINDIR=$(PREFIX)/bin
-LIBDIR=$(PREFIX)/lib
+LIBDIR=$(PREFIX)/share
 XSLDIR=$(LIBDIR)/xslt
 PREXML=$(BINDIR)/prexml
 POSTXML=$(BINDIR)/postxml
