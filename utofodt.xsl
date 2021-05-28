@@ -118,6 +118,25 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   </xsl:if>
 </xsl:template>
 
+<!-- tables -->
+<xsl:template match="TABLE">
+  <table:table table:name="Table" table:style-name="Table">
+    <table:table-column table:style-name="Table.Col">
+      <xsl:attribute name="table:number-columns-repeated"><xsl:value-of select="@col"/></xsl:attribute>
+    </table:table-column>
+    <xsl:apply-templates/>
+  </table:table>
+</xsl:template>
+<xsl:template match="ROW">
+  <table:table-row table:style-name="TableLine">
+      <xsl:apply-templates/>
+  </table:table-row>
+</xsl:template>
+<xsl:template match="COL">
+     <table:table-cell table:style-name="Table.Col" office:value-type="string">
+      <text:p text:style-name="P1"><xsl:apply-templates/></text:p>
+     </table:table-cell>
+</xsl:template>
 
 
 <!-- lists -->
